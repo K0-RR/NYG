@@ -1,4 +1,4 @@
-# Fabric Example Mod
+# What Is Oh The Nuggets You'll Get?
 
 ## Setup
 
