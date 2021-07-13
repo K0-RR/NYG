@@ -1,0 +1,24 @@
+# This workflow will build a Java project with Gradle. This provides a first line of defence against bad commits. For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+name: Auto builds
+on: [ pull_request, push ]
+jobs:
+  Build:
+    strategy:
+      matrix:
+        java: [ 16 ]
+    runs-on: [ ubuntu-latest ]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2.3.4
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v2.1.0
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: ./gradlew build
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: ${{ github.event.repository.name }}
+        path: build/libs
